@@ -1,4 +1,3 @@
-import React from 'react';
 import { PortraitContainer } from '../components/layout/PortraitContainer';
 import { SwordEffect } from '../components/home/SwordEffect';
 import { CursorGlow } from '../components/home/CursorGlow';

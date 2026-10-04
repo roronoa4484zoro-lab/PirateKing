@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useRef, useEffect } from 'react';
+import { useState } from 'react';
 import { Sparkles } from "lucide-react";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
@@ -25,19 +25,13 @@ export function MetallicButton({
   sheenColor = "#ffffff",
 }: MetallicButtonProps) {
   const [isHovered, setIsHovered] = useState(false);
-  const [isPressed, setIsPressed] = useState(false);
 
   return (
     <div className={cn("relative inline-block group", className)}>
       <button
         onClick={onClick}
         onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => {
-          setIsHovered(false);
-          setIsPressed(false);
-        }}
-        onMouseDown={() => setIsPressed(true)}
-        onMouseUp={() => setIsPressed(false)}
+        onMouseLeave={() => setIsHovered(false)}
         className={cn(
           "relative px-8 py-3 rounded-full font-medium transition-all duration-300 ease-out",
           "text-white overflow-hidden shadow-xl",
@@ -46,7 +40,6 @@ export function MetallicButton({
         )}
         style={{ backgroundColor: baseColor }}
       >
-        {/* Glass Shine Overlay */}
         <div
           className={cn(
             "absolute inset-0 pointer-events-none transition-opacity duration-500",
@@ -58,20 +51,13 @@ export function MetallicButton({
             animation: 'shimmer 3s infinite linear'
           }}
         />
-
-        {/* Inner Glow */}
         <div className="absolute inset-0 rounded-full border-t border-white/30 pointer-events-none" />
-
-        {/* Content */}
         <div className="relative z-10 flex items-center justify-center gap-2">
           <Sparkles className="size-4 text-white/80" />
           <span>{label}</span>
         </div>
-
-        {/* Bottom Shadow */}
         <div className="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-black/40 to-transparent pointer-events-none" />
       </button>
-
       <style dangerouslySetInnerHTML={{ __html: `
         @keyframes shimmer {
           0% { background-position: -200% 0; }

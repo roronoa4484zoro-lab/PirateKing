@@ -1,4 +1,3 @@
-import React from 'react';
 import { AdminGuard } from '../components/admin/AdminGuard';
 import { RequestList } from '../components/admin/RequestList';
 
