@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 interface Particle {
   id: number;
@@ -14,11 +14,10 @@ export const SwordEffect: React.FC = () => {
   const [particles, setParticles] = useState<Particle[]>([]);
 
   useEffect(() => {
-    // Create initial set of particles
     const initialParticles = Array.from({ length: 30 }).map((_, i) => ({
       id: i,
-      x: 40 + Math.random() * 20, // Center around the blade
-      y: 80 + Math.random() * 20, // Start from the bottom/middle of the blade
+      x: 40 + Math.random() * 20,
+      y: 80 + Math.random() * 20,
       size: Math.random() * 3 + 1,
       duration: Math.random() * 3 + 2,
       delay: Math.random() * 5,
@@ -53,8 +52,6 @@ export const SwordEffect: React.FC = () => {
           }}
         />
       ))}
-
-      {/* Heat wave shimmer effect */}
       <div className="absolute inset-0 bg-gradient-to-t from-orange-500/10 via-transparent to-transparent animate-pulse-slow pointer-events-none" />
     </div>
   );

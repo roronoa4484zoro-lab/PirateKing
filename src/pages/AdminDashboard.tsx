@@ -21,7 +21,6 @@ export default function AdminDashboard() {
               Back to Site
             </button>
           </header>
-
           <RequestList />
         </div>
       </div>

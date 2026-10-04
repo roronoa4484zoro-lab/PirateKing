@@ -1,10 +1,6 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { MetallicButton } from './ui/MetallicButton';
 import { supabase } from '../../lib/supabase';
-
-interface RequestActionsProps {
-  userName: string;
-}
 
 export const RequestActions: React.FC = () => {
   const [formData, setFormData] = useState({ name: '', message: '' });
@@ -41,7 +37,6 @@ export const RequestActions: React.FC = () => {
 
   return (
     <div className="flex flex-col items-center gap-8 w-full max-w-xs mx-auto z-30">
-      {/* Premium Direct Links */}
       <div className="flex gap-4">
         <MetallicButton
           label="WhatsApp"
@@ -57,7 +52,6 @@ export const RequestActions: React.FC = () => {
         />
       </div>
 
-      {/* DB Request Form */}
       <form onSubmit={handleDbSubmit} className="flex flex-col gap-3 w-full bg-white/5 p-6 rounded-2xl backdrop-blur-md border border-white/10">
         <input
           type="text"
@@ -77,12 +71,11 @@ export const RequestActions: React.FC = () => {
 
         <MetallicButton
           label={status === 'sending' ? "Sending..." : status === 'success' ? "Sent!" : "Send Request"}
-          onClick={() => {}} // Handle via form submit
+          onClick={() => {}}
           baseColor="#d4af37"
           sheenColor="#fff"
           className="w-full"
         />
-        {/* Hidden submit button to trigger form submit */}
         <button type="submit" className="hidden" />
       </form>
     </div>

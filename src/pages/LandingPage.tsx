@@ -8,7 +8,6 @@ export default function LandingPage() {
   return (
     <PortraitContainer>
       <div className="relative w-full h-full bg-darkest overflow-hidden">
-        {/* The Background Sword Image */}
         <div
           className="absolute inset-0 bg-cover bg-center z-0"
           style={{
@@ -16,12 +15,8 @@ export default function LandingPage() {
             filter: 'brightness(0.7)'
           }}
         />
-
-        {/* Lighting and Animation Layers */}
         <CursorGlow />
         <SwordEffect />
-
-        {/* Content Overlay */}
         <div className="relative z-20 flex flex-col items-center justify-end h-full pb-20 px-6 text-center">
           <h1 className="text-5xl font-black italic tracking-tighter text-white mb-4 drop-shadow-lg">
             SURPASS <br />
@@ -31,7 +26,6 @@ export default function LandingPage() {
             Forged in fire, tempered by will.
             Send your requests and transcend.
           </p>
-
           <RequestActions />
         </div>
       </div>
