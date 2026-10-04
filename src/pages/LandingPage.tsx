@@ -10,7 +10,7 @@ export default function LandingPage() {
         <div
           className="absolute inset-0 bg-cover bg-center z-0"
           style={{
-            backgroundImage: `url('C:/Users/user/Downloads/cm lab prints/New folder/surpass your limits.png')`,
+            backgroundImage: `url('/surpass your limits.png')`,
             filter: 'brightness(0.7)'
           }}
         />
