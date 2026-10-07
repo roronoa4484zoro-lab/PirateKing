@@ -1,71 +1,100 @@
-"use client";
-
-import { useState } from 'react';
-import { Sparkles } from "lucide-react";
-import { clsx, type ClassValue } from "clsx";
-import { twMerge } from "tailwind-merge";
-
-function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs));
-}
+import React from 'react';
+import { motion } from 'framer-motion';
 
 interface MetallicButtonProps {
-  label?: string;
+  label: string;
   onClick?: () => void;
+  icon?: React.ReactNode;
   className?: string;
-  baseColor?: string;
-  sheenColor?: string;
+  type?: 'button' | 'submit' | 'reset';
+  disabled?: boolean;
+  variant?: 'steel' | 'bronze' | 'action';
+  ariaLabel?: string;
 }
 
-export function MetallicButton({
-  label = "Get Started",
+export const MetallicButton: React.FC<MetallicButtonProps> = ({
+  label,
   onClick,
-  className = "",
-  baseColor = "#000000",
-  sheenColor = "#ffffff",
-}: MetallicButtonProps) {
-  const [isHovered, setIsHovered] = useState(false);
+  icon,
+  className = '',
+  type = 'button',
+  disabled = false,
+  variant = 'steel',
+  ariaLabel,
+}) => {
+  const getVariantStyles = () => {
+    switch (variant) {
+      case 'bronze':
+        return {
+          border: 'border-[#c5a059]/30 hover:border-[#c5a059]/60 focus-visible:ring-[#c5a059]/50',
+          bg: 'bg-gradient-to-b from-[#14120e] to-[#090806]',
+          accentText: 'text-[#e0c58e]',
+          sheen: 'rgba(224, 197, 142, 0.12)',
+        };
+      case 'action':
+        return {
+          border: 'border-white/20 hover:border-white/40 focus-visible:ring-white/40',
+          bg: 'bg-gradient-to-b from-[#181818] to-[#0d0d0d]',
+          accentText: 'text-[#f5f5f0]',
+          sheen: 'rgba(255, 255, 255, 0.14)',
+        };
+      case 'steel':
+      default:
+        return {
+          border: 'border-white/[0.12] hover:border-white/[0.28] focus-visible:ring-white/30',
+          bg: 'bg-gradient-to-b from-[#121212] to-[#080808]',
+          accentText: 'text-[#f5f5f0]',
+          sheen: 'rgba(245, 245, 240, 0.10)',
+        };
+    }
+  };
+
+  const currentVariant = getVariantStyles();
 
   return (
-    <div className={cn("relative inline-block group", className)}>
-      <button
-        onClick={onClick}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-        className={cn(
-          "relative px-8 py-3 rounded-full font-medium transition-all duration-300 ease-out",
-          "text-white overflow-hidden shadow-xl",
-          "active:scale-95 transition-transform",
-          "border border-white/20"
+    <motion.button
+      type={type}
+      onClick={onClick}
+      disabled={disabled}
+      aria-label={ariaLabel || label}
+      whileHover={{ y: -2 }}
+      whileTap={{ y: 0 }}
+      transition={{ duration: 0.18, ease: [0.22, 1, 0.36, 1] }}
+      className={`relative group overflow-hidden px-5 py-2.5 rounded-lg border backdrop-blur-md transition-colors duration-300 focus:outline-none focus-visible:ring-1 disabled:opacity-50 disabled:pointer-events-none select-none ${currentVariant.border} ${currentVariant.bg} ${className}`}
+    >
+      {/* Subtle top bevel edge reflecting overhead light */}
+      <div 
+        className="absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent pointer-events-none"
+        aria-hidden="true" 
+      />
+
+      {/* Subtle light sweep across the metallic surface on hover */}
+      <div
+        className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out pointer-events-none"
+        style={{
+          background: `linear-gradient(90deg, transparent 0%, ${currentVariant.sheen} 50%, transparent 100%)`,
+        }}
+        aria-hidden="true"
+      />
+
+      {/* Content */}
+      <div className="relative z-10 flex items-center justify-center gap-2.5">
+        {icon ? (
+          <span className="text-white/60 group-hover:text-white transition-colors duration-200 text-xs">
+            {icon}
+          </span>
+        ) : (
+          <span className="text-white/40 group-hover:text-white/80 transition-colors duration-200 text-[10px]">
+            ◇
+          </span>
         )}
-        style={{ backgroundColor: baseColor }}
-      >
-        <div
-          className={cn(
-            "absolute inset-0 pointer-events-none transition-opacity duration-500",
-            isHovered ? "opacity-100" : "opacity-40"
-          )}
-          style={{
-            background: `linear-gradient(135deg, transparent 0%, ${sheenColor}33 50%, transparent 100%)`,
-            backgroundSize: '200% 200%',
-            animation: 'shimmer 3s infinite linear'
-          }}
-        />
-        <div className="absolute inset-0 rounded-full border-t border-white/30 pointer-events-none" />
-        <div className="relative z-10 flex items-center justify-center gap-2">
-          <Sparkles className="size-4 text-white/80" />
-          <span>{label}</span>
-        </div>
-        <div className="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-black/40 to-transparent pointer-events-none" />
-      </button>
-      <style dangerouslySetInnerHTML={{ __html: `
-        @keyframes shimmer {
-          0% { background-position: -200% 0; }
-          100% { background-position: 200% 0; }
-        }
-      `}} />
-    </div>
+        <span className={`text-xs font-medium tracking-wider uppercase ${currentVariant.accentText}`}>
+          {label}
+        </span>
+      </div>
+    </motion.button>
   );
-}
+};
 
 export default MetallicButton;
+
